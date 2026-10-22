@@ -137,3 +137,49 @@
   background: linear-gradient(90deg, rgba(251, 113, 133, 0.3), rgba(251, 113, 133, 0.16));
   transition: clip-path 0.55s cubic-bezier(0.22, 1, 0.36, 1);
 }
+
+/* ---- star-tap magical page transition ---- */
+.magic-veil {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  background: radial-gradient(
+    circle at var(--ox) var(--oy),
+    #fff8e3 0%,
+    #ffe9b8 16%,
+    rgba(255, 214, 150, 0.97) 36%,
+    rgba(248, 183, 192, 0.96) 62%,
+    rgba(233, 146, 168, 0.96) 100%
+  );
+  clip-path: circle(0px at var(--ox) var(--oy));
+}
+.magic-veil.go {
+  clip-path: circle(150vmax at var(--ox) var(--oy));
+  transition: clip-path 0.95s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.magic-veil.fade {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+.magic-spark {
+  position: absolute;
+  left: var(--ox);
+  top: var(--oy);
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background: rgba(255, 196, 208, 0.95);
+  box-shadow: 0 0 14px 5px rgba(255, 196, 208, 0.5);
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 0;
+  animation: magic-spark 1.15s ease-out forwards;
+}
+@keyframes magic-spark {
+  0% { opacity: 0; }
+  15% { opacity: 1; }
+  100% {
+    transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(0.35);
+    opacity: 0;
+  }
+}
