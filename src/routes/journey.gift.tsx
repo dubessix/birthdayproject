@@ -160,7 +160,7 @@ function Gift() {
                 initial={{ y: 70, opacity: 0, scale: 0.35, rotate: -4 }}
                 animate={{ y: 0, opacity: 1, scale: 1, rotate: 0 }}
                 exit={{ y: 60, opacity: 0, scale: 0.3, rotate: 5 }}
-                transition={{ type: "spring", stiffness: 150, damping: 13 }}
+                transition={{ enter: { type: "spring", stiffness: 150, damping: 13 }, exit: { duration: 0.32, ease: "easeIn" } }}
                 whileTap={{ scale: 0.94 }}
               >
                 <span
