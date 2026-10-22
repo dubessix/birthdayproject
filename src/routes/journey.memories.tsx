@@ -1,6 +1,7 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { AnimatePresence, motion } from "framer-motion";
 import { useLayoutEffect, useState } from "react";
+import { tapFill } from "@/lib/tapfill";
 import { SceneShell } from "@/components/layout/SceneShell";
 import { content } from "@/lib/content";
 
@@ -90,7 +91,8 @@ function Memories() {
                   setNoteOpen(false);
                   try { sessionStorage.setItem("hena:note-seen", "1"); } catch {}
                 }}
-                className="mt-5 min-h-11 rounded-full bg-rose-500/90 px-7 py-2.5 text-sm text-white shadow-lg shadow-rose-900/40 transition hover:scale-[1.03]"
+                onPointerDown={tapFill("rgba(255,255,255,0.35)")}
+                className="relative isolate mt-5 min-h-11 overflow-hidden rounded-full bg-rose-500/90 px-7 py-2.5 text-sm text-white shadow-lg shadow-rose-900/40 transition hover:scale-[1.03]"
               >
                 {content.memories.apologyButton}
               </button>

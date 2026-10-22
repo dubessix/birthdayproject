@@ -2,6 +2,7 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import { SceneShell } from "@/components/layout/SceneShell";
+import { tapFill } from "@/lib/tapfill";
 import { content } from "@/lib/content";
 
 export const Route = createFileRoute("/journey/credits")({
@@ -58,11 +59,11 @@ function Credits() {
           <AuthorPhoto />
         </motion.div>
 
-        <motion.h1 {...fade(0.25)} className="mt-6 font-display text-2xl tracking-wide text-rose-900 dark:text-rose-100">
+        <motion.h1 {...fade(0.25)} className="mt-5 font-display text-2xl tracking-wide text-rose-900 dark:text-rose-100">
           {content.credits.signature}
         </motion.h1>
 
-        <motion.div {...fade(0.4)} className="mx-auto my-6 h-px w-16 bg-gradient-to-r from-transparent via-rose-400 to-transparent" />
+        <motion.div {...fade(0.4)} className="mx-auto my-4 h-px w-16 bg-gradient-to-r from-transparent via-rose-400 to-transparent" />
 
         <motion.p {...fade(0.5)} className="text-sm text-muted-foreground">
           {content.credits.thanks}
@@ -70,12 +71,12 @@ function Credits() {
 
         <motion.p
           {...fade(0.65)}
-          className="mt-5 inline-block rounded-full border border-rose-200/20 bg-rose-200/[0.06] px-5 py-2 font-hand text-base text-rose-100/85"
+          className="mt-4 inline-block rounded-full border border-rose-200/20 bg-rose-200/[0.06] px-5 py-2 font-hand text-base text-rose-100/85"
         >
           {content.credits.ps}
         </motion.p>
 
-        <motion.div {...fade(0.72)} className="mt-7">
+        <motion.div {...fade(0.72)} className="mt-5">
           <img
             src="/media/memes/not-that-special.jpg"
             alt="A cartoon figure scratching his head with the caption: ab mai itna bhi kuch khass nahi"
@@ -90,16 +91,17 @@ function Credits() {
               try { sessionStorage.removeItem("hena:unlocked"); } catch { /* storage may be unavailable */ }
               nav({ to: "/" });
             }}
+            onPointerDown={tapFill("rgba(255,255,255,0.5)")}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.97 }}
-            className="mt-8 min-h-11 rounded-full bg-gradient-to-r from-amber-200 via-rose-200 to-amber-200 px-7 py-2.5 text-sm text-rose-950 shadow-[0_0_40px_rgba(232,192,122,0.6)]"
+            className="relative isolate mt-6 min-h-11 overflow-hidden rounded-full bg-gradient-to-r from-amber-200 via-rose-200 to-amber-200 px-7 py-2.5 text-sm text-rose-950 shadow-[0_0_40px_rgba(232,192,122,0.6)]"
           >
             ✨ {content.credits.restart}
           </motion.button>
         </motion.div>
 
         {/* the secret p.s. — only the curious will ever find it */}
-        <motion.div {...fade(1)} className="mt-9">
+        <motion.div {...fade(1)} className="mt-6">
           <button
             onClick={() => setEgg((v) => !v)}
             className="-m-3 p-3 rounded text-[11px] tracking-[0.3em] text-rose-200/35 transition hover:text-rose-200/70 focus-visible:text-rose-200/70 focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-rose-200/40"

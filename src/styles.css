@@ -118,3 +118,22 @@
 }
 @utility font-display { font-family: var(--font-display); }
 @utility font-hand { font-family: var(--font-hand); }
+
+/* ---- tap-to-fill ripple ---- */
+.tapfill-ink {
+  position: absolute;
+  z-index: -1;
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(0);
+  will-change: transform, opacity;
+}
+/* persistent tab fill: clip-path circle grows from the tap point */
+.tapfill-tab {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(90deg, rgba(251, 113, 133, 0.3), rgba(251, 113, 133, 0.16));
+  transition: clip-path 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}

@@ -6,6 +6,7 @@ import { SceneShell } from "@/components/layout/SceneShell";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { content } from "@/lib/content";
 import { useJourney } from "@/lib/journey";
+import { tapFill } from "@/lib/tapfill";
 
 export const Route = createFileRoute("/journey/password")({
   head: () => ({ meta: [{ name: "robots", content: "noindex" }, { title: "A secret key 🗝️" }] }),
@@ -21,6 +22,7 @@ function Password() {
   const [attempts, setAttempts] = useState(0);
   const [wrong, setWrong] = useState(false);
   const [burst, setBurst] = useState(false);
+  const [teaserBroken, setTeaserBroken] = useState(false);
 
   const submit = (next: string) => {
     if (next === content.secret.password) {
@@ -74,7 +76,16 @@ function Password() {
         <GlassCard className="p-6">
           <div className="mb-5 flex flex-col items-center">
             <div className="relative rotate-[-3deg] rounded-md bg-white p-2 pb-6 shadow-lg">
-              <div className="h-28 w-32 rounded-sm bg-gradient-to-br from-rose-200 via-amber-100 to-lilac" />
+              <div className="relative h-28 w-32 overflow-hidden rounded-sm bg-gradient-to-br from-rose-200 via-amber-100 to-lilac">
+                {!teaserBroken && (
+                  <img
+                    src={content.photos[0]?.src}
+                    alt="A little preview of the memories waiting inside"
+                    onError={() => setTeaserBroken(true)}
+                    className="absolute inset-0 z-10 h-full w-full rounded-sm object-cover object-[50%_35%]"
+                  />
+                )}
+              </div>
               <p className="mt-2 text-center font-hand text-sm text-rose-900">a small secret</p>
             </div>
             <img
@@ -100,8 +111,9 @@ function Password() {
                 <button
                   key={i}
                   onClick={() => press(k)}
+                  onPointerDown={tapFill("rgba(255,255,255,0.5)")}
                   aria-label={k === "⌫" ? "Delete last digit" : `Digit ${k}`}
-                  className="h-12 rounded-2xl border border-white/40 bg-white/50 text-lg font-medium text-rose-900 shadow-sm backdrop-blur transition active:scale-95 dark:border-white/10 dark:bg-white/5 dark:text-rose-100"
+                  className="relative isolate h-12 overflow-hidden rounded-2xl border border-white/40 bg-white/50 text-lg font-medium text-rose-900 shadow-sm backdrop-blur transition active:scale-95 dark:border-white/10 dark:bg-white/5 dark:text-rose-100"
                 >
                   {k === "⌫" ? <HiOutlineBackspace className="mx-auto h-5 w-5" /> : k}
                 </button>
@@ -132,7 +144,8 @@ function Password() {
               {/* friendly escape hatch — the gate is theatre, she should never get stuck */}
               <button
                 onClick={() => { unlock(); nav({ to: "/journey/loading" }); }}
-                className="mt-2 min-h-8 rounded-full px-4 py-1.5 text-[11px] underline-offset-4 hover:underline"
+                onPointerDown={tapFill("rgba(255,255,255,0.35)")}
+                className="relative isolate mt-2 min-h-8 overflow-hidden rounded-full px-4 py-1.5 text-[11px] underline-offset-4 hover:underline"
               >
                 still stuck? continue anyway 😅
               </button>

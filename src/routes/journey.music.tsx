@@ -1,6 +1,8 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { HiOutlinePause, HiOutlinePlay } from "react-icons/hi2";
+import { useState } from "react";
+import { tapFill } from "@/lib/tapfill";
 import { SceneShell } from "@/components/layout/SceneShell";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { content } from "@/lib/content";
@@ -12,6 +14,7 @@ export const Route = createFileRoute("/journey/music")({
 });
 
 function MusicScene() {
+  const [fillOrigin, setFillOrigin] = useState<{ i: number; x: number; y: number } | null>(null);
   const nav = useNavigate();
   const { musicOn, musicFailed, toggleMusic, playTrack, trackIndex } = useJourney();
 
@@ -38,8 +41,9 @@ function MusicScene() {
         <div className="mt-5 flex items-center justify-center gap-4">
           <button
             onClick={() => (musicOn ? toggleMusic() : playTrack(trackIndex))}
+            onPointerDown={tapFill("rgba(255,255,255,0.35)")}
             aria-label={musicOn ? "Pause" : "Play"}
-            className="grid h-14 w-14 place-items-center rounded-full bg-rose-500 text-white shadow-xl transition hover:scale-105"
+            className="relative isolate grid h-14 w-14 place-items-center overflow-hidden rounded-full bg-rose-500 text-white shadow-xl transition hover:scale-105"
           >
             {musicOn ? <HiOutlinePause className="h-6 w-6" /> : <HiOutlinePlay className="h-6 w-6" />}
           </button>
@@ -54,12 +58,30 @@ function MusicScene() {
             <button
               key={i}
               onClick={() => (i === trackIndex ? toggleMusic() : playTrack(i))}
-              className={`flex min-h-12 w-full items-center gap-3 rounded-2xl border px-4 py-2.5 text-left transition ${
+              onPointerDown={(e) => {
+                const r = e.currentTarget.getBoundingClientRect();
+                setFillOrigin({
+                  i,
+                  x: ((e.clientX - r.left) / r.width) * 100,
+                  y: ((e.clientY - r.top) / r.height) * 100,
+                });
+              }}
+              className={`relative isolate flex min-h-12 w-full items-center gap-3 overflow-hidden rounded-2xl border px-4 py-2.5 text-left transition ${
                 i === trackIndex
-                  ? "border-rose-300/40 bg-rose-400/15 text-rose-100"
+                  ? "border-rose-300/40 text-rose-100"
                   : "border-white/10 bg-white/5 text-rose-100/80 hover:bg-white/10"
               }`}
             >
+              <span
+                aria-hidden
+                className="tapfill-tab"
+                style={{
+                  clipPath:
+                    i === trackIndex
+                      ? `circle(145% at ${fillOrigin?.i === i ? fillOrigin.x : 50}% ${fillOrigin?.i === i ? fillOrigin.y : 50}%)`
+                      : "circle(0% at 50% 50%)",
+                }}
+              />
               <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-white/10 text-[11px]">
                 {i === trackIndex && musicOn ? <HiOutlinePause className="h-3.5 w-3.5" /> : <HiOutlinePlay className="h-3.5 w-3.5" />}
               </span>
@@ -73,11 +95,12 @@ function MusicScene() {
 
         <button
           onClick={() => nav({ to: "/journey/wishes" })}
-          className="mt-7 min-h-11 rounded-full bg-white/60 px-7 py-3 text-sm text-rose-900 backdrop-blur transition hover:scale-[1.02] dark:bg-white/10 dark:text-rose-100"
+          onPointerDown={tapFill("rgba(255,255,255,0.45)")}
+          className="relative isolate mt-7 min-h-11 overflow-hidden rounded-full bg-white/60 px-7 py-3 text-sm text-rose-900 backdrop-blur transition hover:scale-[1.02] dark:bg-white/10 dark:text-rose-100"
         >
           {content.musicPage.nextLabel}
         </button>
       </GlassCard>
     </SceneShell>
   );
-}
+}  
