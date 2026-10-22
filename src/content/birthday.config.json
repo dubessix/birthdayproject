@@ -70,13 +70,19 @@
     "candles": 5,
     "blowLabel": "Blow the candles",
     "blowHint": "tap — the lights will dim",
-    "nextLabel": "Make a wish → play our song"
+    "nextLabel": "Make a wish → play our song",
+    "tune": "/media/audio/birthday-tune.mp3"
   },
   "musicPage": {
     "title": "for your ears",
     "nextLabel": "Continue →"
   },
   "music": [
+    {
+      "title": "the one you picked 💗",
+      "artist": "your ringtone, on loop",
+      "src": "/media/audio/chosen-ring.mp3"
+    },
     {
       "title": "For Hena",
       "artist": "a soft piano",

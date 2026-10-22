@@ -11,6 +11,8 @@ type JourneyState = {
   trackIndex: number;
   playMusic: () => void;
   playTrack: (i: number) => void;
+  playCakeTune: () => void;
+  stopCakeTune: () => void;
   toggleMusic: () => void;
 };
 
@@ -77,11 +79,46 @@ export function JourneyProvider({ children }: { children: ReactNode }) {
     else h.play();
   }, [ensureHowl]);
 
+
+  // --- cake moment: a cheerful happy-birthday cue that takes over, then hands back ---
+  const cakeHowl = useRef<Howl | null>(null);
+  const resumeWasOn = useRef(false);
+
+  const playCakeTune = useCallback(() => {
+    const main = howls.current[current.current];
+    resumeWasOn.current = !!main && main.playing();
+    if (main && main.playing()) main.pause();
+    if (!cakeHowl.current) {
+      cakeHowl.current = new Howl({
+        src: [content.cake.tune],
+        html5: true,
+        loop: false,
+        volume: 0.5,
+        onplay: () => { setMusicOn(true); setMusicFailed(false); },
+        onpause: () => setMusicOn(false),
+        onstop: () => setMusicOn(false),
+        onend: () => setMusicOn(false),
+        onloaderror: () => { setMusicOn(false); setMusicFailed(true); },
+        onplayerror: () => { setMusicOn(false); setMusicFailed(true); },
+      });
+    }
+    cakeHowl.current.play();
+  }, []);
+
+  const stopCakeTune = useCallback(() => {
+    cakeHowl.current?.stop();
+    const main = howls.current[current.current];
+    if (main && resumeWasOn.current) main.play();
+    resumeWasOn.current = false;
+  }, []);
+
+  useEffect(() => () => { cakeHowl.current?.unload(); }, []);
+
   useEffect(() => () => { Object.values(howls.current).forEach((h) => h.unload()); }, []);
 
   const value = useMemo(
-    () => ({ hydrated, unlocked, unlock, musicOn, musicFailed, trackIndex, playMusic, playTrack, toggleMusic }),
-    [hydrated, unlocked, unlock, musicOn, musicFailed, trackIndex, playMusic, playTrack, toggleMusic],
+    () => ({ hydrated, unlocked, unlock, musicOn, musicFailed, trackIndex, playMusic, playTrack, toggleMusic, playCakeTune, stopCakeTune }),
+    [hydrated, unlocked, unlock, musicOn, musicFailed, trackIndex, playMusic, playTrack, toggleMusic, playCakeTune, stopCakeTune],
   );
 
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;

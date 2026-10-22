@@ -49,7 +49,7 @@ function Loading() {
           {!musicOn && (
             <>
               <GoldButton onClick={playMusic} className="gap-2 min-h-11">
-                <HiOutlinePlay className="mr-2 inline h-4 w-4" /> Play soft piano
+                <HiOutlinePlay className="mr-2 inline h-4 w-4" /> Play your song 🎵
               </GoldButton>
               {musicFailed && (
                 <p className="text-xs text-rose-200/70" role="status">

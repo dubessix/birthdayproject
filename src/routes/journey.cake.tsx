@@ -1,10 +1,11 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { AnimatePresence, motion } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import confetti from "canvas-confetti";
 import { SceneShell } from "@/components/layout/SceneShell";
 import { GoldButton } from "@/components/ui/GoldButton";
 import { content } from "@/lib/content";
+import { useJourney } from "@/lib/journey";
 
 export const Route = createFileRoute("/journey/cake")({
   head: () => ({ meta: [{ name: "robots", content: "noindex" }, { title: "Make a wish 🎂" }] }),
@@ -62,6 +63,11 @@ function Candle({ blown, delay }: { blown: boolean; delay: number }) {
 }
 
 function Cake() {
+  const { playCakeTune, stopCakeTune } = useJourney();
+  useEffect(() => {
+    playCakeTune();
+    return () => stopCakeTune();
+  }, [playCakeTune, stopCakeTune]);
   const nav = useNavigate();
   const [built, setBuilt] = useState(false);
   const [dim, setDim] = useState(false);
