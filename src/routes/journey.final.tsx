@@ -101,6 +101,22 @@ function Final() {
           <p className="whitespace-pre-line text-[15px] leading-snug text-rose-100/85">{content.finalMessage}</p>
         </motion.div>
 
+        {/* the pizza cat peeks in after the message lands — a funny little p.s. */}
+        <motion.button
+          aria-label="a cat offering pizza"
+          initial={{ opacity: 0, y: 34, rotate: 16 }}
+          animate={{ opacity: phase === "text" ? 1 : 0, y: 0, rotate: 6 }}
+          transition={{ delay: 2.4, type: "spring", stiffness: 120, damping: 14 }}
+          whileTap={{ rotate: -3, scale: 1.07 }}
+          className="absolute -bottom-4 right-1 z-20 w-24 sm:right-6"
+        >
+          <img
+            src="/media/memes/pizza.jpg"
+            alt="a cat offering a slice of pizza"
+            className="rounded-xl border-2 border-cream shadow-[0_16px_40px_-12px_rgba(0,0,0,0.8)]"
+          />
+        </motion.button>
+
         <motion.button
           initial={{ opacity: 0 }}
           animate={{ opacity: phase === "text" ? 1 : 0 }}

@@ -19,10 +19,54 @@ function goldBurst() {
   });
 }
 
+// the loot table — two drops, exactly like a little gacha game
+const LOOT = [
+  {
+    src: "/media/memes/kitkat.jpg",
+    alt: "a white cat offering a kitkat",
+    rarity: "COMMON",
+    stars: "✦",
+    klass: "chocolate class",
+    note: "gift #1: kitkat. budget — full love, zero money 😌",
+    badge: "bg-slate-100 text-slate-700 border-slate-300",
+  },
+  {
+    src: "/media/memes/shinchan.jpg",
+    alt: "shin-chan running with a bouquet of flowers",
+    rarity: "LEGENDARY",
+    stars: "✦✦✦",
+    klass: "flowers class",
+    note: "…flowers. don't read into it 🫶",
+    badge: "bg-gradient-to-r from-amber-200 to-amber-400 text-amber-900 border-amber-300",
+  },
+];
+
 function Gift() {
   const nav = useNavigate();
   const [open, setOpen] = useState(false);
+  const [drop, setDrop] = useState(0); // 0 = none yet, 1/2 = card on screen, 3 = all collected
   const page = content.gift;
+
+  const openBox = () => {
+    if (open) return;
+    setOpen(true);
+    goldBurst();
+    window.setTimeout(() => setDrop(1), 1500);
+  };
+
+  const collect = () => {
+    setDrop((d) => {
+      if (d === 1) {
+        window.setTimeout(goldBurst, 350); // legendary sparkle when drop 2 lands
+        return 2;
+      }
+      if (d === 2) return 3;
+      return d;
+    });
+  };
+
+  const collected = Math.min(Math.max(drop - 1, 0), 2);
+  const done = drop >= 3;
 
   return (
     <SceneShell>
@@ -30,11 +74,7 @@ function Gift() {
         <h1 className="font-display text-4xl text-rose-100">{page.title}</h1>
         <p className="mt-1 text-sm text-rose-200/60">{page.subtitle}</p>
 
-        <button
-          onClick={() => { if (!open) { setOpen(true); goldBurst(); } }}
-          className="relative mt-12 h-60 w-60"
-          aria-label="Open gift"
-        >
+        <div className="relative mt-12 h-60 w-60">
           {/* soft glow under the box */}
           <div className="absolute bottom-2 left-1/2 h-6 w-44 -translate-x-1/2 rounded-[100%] bg-rose-500/25 blur-xl" />
 
@@ -63,13 +103,17 @@ function Gift() {
             </div>
           </motion.div>
 
+          {!open && (
+            <button onClick={openBox} className="absolute inset-0 z-10" aria-label="Open gift" />
+          )}
+
           <AnimatePresence>
             {open && (
               <>
-                {/* the surprise: a very happy cat pops out of the box */}
+                {/* the loot-master cat pops out of the box (kept exactly as before) */}
                 <motion.div
                   key="cat"
-                  className="absolute left-1/2 top-6 z-10 -translate-x-1/2"
+                  className={`absolute left-1/2 z-30 -translate-x-1/2 ${drop >= 1 && drop <= 2 ? "-top-16" : "top-2"}`}
                   initial={{ y: 70, opacity: 0, scale: 0.3 }}
                   animate={{ y: 0, opacity: 1, scale: 1 }}
                   transition={{ delay: 0.55, type: "spring", stiffness: 130, damping: 12 }}
@@ -84,8 +128,8 @@ function Gift() {
                   <motion.div
                     className="mt-1 -rotate-2 whitespace-nowrap rounded-xl bg-cream px-3 py-1 text-center font-hand text-lg text-rose-900 shadow-lg"
                     initial={{ opacity: 0, scale: 0.6 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 1.1, type: "spring", stiffness: 200, damping: 15 }}
+                    animate={{ opacity: drop >= 1 && drop <= 2 ? 0 : 1, scale: 1 }}
+                    transition={{ delay: drop >= 1 && drop <= 2 ? 0 : 1.1, type: "spring", stiffness: 200, damping: 15 }}
                   >
                     meow! happy birthday!!
                   </motion.div>
@@ -104,15 +148,78 @@ function Gift() {
               </>
             )}
           </AnimatePresence>
-        </button>
 
+          {/* loot drops rise out of the box, one tap each — like game value */}
+          <AnimatePresence mode="wait">
+            {open && drop >= 1 && drop <= 2 && (
+              <motion.button
+                key={drop}
+                onClick={collect}
+                aria-label="Next item"
+                className="absolute left-1/2 top-1/2 z-20 w-64 -translate-x-1/2 -translate-y-1/2"
+                initial={{ y: 70, opacity: 0, scale: 0.35, rotate: -4 }}
+                animate={{ y: 0, opacity: 1, scale: 1, rotate: 0 }}
+                exit={{ y: 60, opacity: 0, scale: 0.3, rotate: 5 }}
+                transition={{ type: "spring", stiffness: 150, damping: 13 }}
+                whileTap={{ scale: 0.94 }}
+              >
+                <span
+                  className={`absolute -top-3 left-1/2 z-10 -translate-x-1/2 whitespace-nowrap rounded-full border px-3 py-0.5 text-[10px] font-bold tracking-[0.18em] shadow ${LOOT[drop - 1].badge}`}
+                >
+                  {LOOT[drop - 1].rarity} {LOOT[drop - 1].stars}
+                </span>
+                <span className="block overflow-hidden rounded-xl border-4 border-cream bg-cream shadow-[0_24px_60px_-18px_rgba(0,0,0,0.85)]">
+                  <img src={LOOT[drop - 1].src} alt={LOOT[drop - 1].alt} className="h-44 w-full object-cover" />
+                </span>
+                <span className="mt-1.5 block -rotate-1 rounded-xl bg-cream px-3 py-1.5 text-center font-hand text-base leading-tight text-rose-900 shadow-lg">
+                  {LOOT[drop - 1].note}
+                </span>
+                <span className="mt-1 block text-center text-[11px] tracking-wide text-rose-100/60">
+                  tap to collect ▸ {LOOT[drop - 1].klass}
+                </span>
+              </motion.button>
+            )}
+          </AnimatePresence>
+        </div>
+
+        {/* little inventory strip — the game-value shelf */}
         {open && (
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.6 }}
+            className="mt-7 flex items-center gap-3"
+          >
+            <span className="font-hand text-base text-rose-100/70">loot bag: {collected}/2</span>
+            {LOOT.map((l, i) => (
+              <span
+                key={l.src}
+                className={`relative h-14 w-14 overflow-hidden rounded-lg border-2 ${
+                  collected > i ? "border-amber-300/80 shadow-[0_0_16px_rgba(232,192,122,0.35)]" : "border-dashed border-rose-200/35"
+                }`}
+              >
+                {collected > i && <img src={l.src} alt={l.alt} className="h-full w-full object-cover" />}
+                {collected > i && (
+                  <span className="absolute bottom-0 right-0 rounded-tl-md bg-amber-300 px-1 text-[10px] font-bold text-amber-900">✓</span>
+                )}
+              </span>
+            ))}
+          </motion.div>
+        )}
+
+        {open && !done && drop >= 1 && (
+          <button onClick={() => setDrop(3)} className="mt-3 min-h-8 text-xs text-rose-100/45 underline underline-offset-4">
+            skip loots 😌
+          </button>
+        )}
+
+        {done && (
           <motion.button
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6 }}
-            onClick={() => nav({ to: "/journey/final" })} data-veilnav
-            className="mt-10 rounded-full bg-rose-500 px-6 py-2.5 text-sm font-medium text-white shadow-lg shadow-rose-900/40"
+            onClick={() => nav({ to: "/journey/final" })}
+            data-veilnav
+            className="mt-8 rounded-full bg-rose-500 px-6 py-2.5 text-sm font-medium text-white shadow-lg shadow-rose-900/40"
           >
             {page.nextLabel}
           </motion.button>
