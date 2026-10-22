@@ -5,6 +5,7 @@ import { useState } from "react";
 import { tapFill } from "@/lib/tapfill";
 import { SceneShell } from "@/components/layout/SceneShell";
 import { GlassCard } from "@/components/ui/GlassCard";
+import { MusicFirstModal } from "@/components/ui/MusicFirstModal";
 import { content } from "@/lib/content";
 import { useJourney } from "@/lib/journey";
 
@@ -15,6 +16,7 @@ export const Route = createFileRoute("/journey/music")({
 
 function MusicScene() {
   const [fillOrigin, setFillOrigin] = useState<{ i: number; x: number; y: number } | null>(null);
+  const [gate, setGate] = useState(false);
   const nav = useNavigate();
   const { musicOn, musicFailed, toggleMusic, playTrack, trackIndex } = useJourney();
 
@@ -106,13 +108,17 @@ function MusicScene() {
         </div>
 
         <button
-          onClick={() => nav({ to: "/journey/wishes" })} data-veilnav
+          onClick={() => {
+            if (!musicOn) { setGate(true); return; }
+            nav({ to: "/journey/wishes" });
+          }} data-veilnav
           onPointerDown={tapFill("rgba(248,183,192,0.85)")}
           className="relative isolate mt-7 min-h-11 overflow-hidden rounded-full bg-white/60 px-7 py-3 text-sm text-rose-900 backdrop-blur transition hover:scale-[1.02] dark:bg-white/10 dark:text-rose-100"
         >
           {content.musicPage.nextLabel}
         </button>
       </GlassCard>
+      <MusicFirstModal open={gate} onClose={() => setGate(false)} onQuiet={() => nav({ to: "/journey/wishes" })} />
     </SceneShell>
   );
 }  

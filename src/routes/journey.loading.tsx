@@ -5,6 +5,7 @@ import { AnimatePresence } from "framer-motion";
 import { HiOutlinePlay } from "react-icons/hi2";
 import { SceneShell } from "@/components/layout/SceneShell";
 import { GlassCard } from "@/components/ui/GlassCard";
+import { MusicFirstModal } from "@/components/ui/MusicFirstModal";
 import { GoldButton } from "@/components/ui/GoldButton";
 import { TypeWriter } from "@/components/ui/TypeWriter";
 import { content } from "@/lib/content";
@@ -21,6 +22,7 @@ function Loading() {
   const [progress, setProgress] = useState(0);
   const [preload, setPreload] = useState(0);
   const [slow, setSlow] = useState(false);
+  const [gate, setGate] = useState(false);
 
   useEffect(() => {
     const id = setInterval(() => setProgress((p) => Math.min(100, p + 2)), 90);
@@ -95,7 +97,10 @@ function Loading() {
           )}
           <button
             data-veilnav
-            onClick={() => nav({ to: "/journey/envelope" })}
+            onClick={() => {
+              if (!musicOn) { setGate(true); return; }
+              nav({ to: "/journey/envelope" });
+            }}
             disabled={shown < 100}
             className="min-h-11 rounded-full px-6 py-3 text-sm text-rose-700 underline-offset-4 hover:underline disabled:opacity-40 dark:text-rose-200"
           >
@@ -103,6 +108,7 @@ function Loading() {
           </button>
         </div>
       </GlassCard>
+      <MusicFirstModal open={gate} onClose={() => setGate(false)} onQuiet={() => nav({ to: "/journey/envelope" })} />
     </SceneShell>
   );
 }
