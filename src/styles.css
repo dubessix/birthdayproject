@@ -135,7 +135,7 @@
   z-index: -1;
   pointer-events: none;
   background: linear-gradient(90deg, rgba(251, 113, 133, 0.3), rgba(251, 113, 133, 0.16));
-  transition: clip-path 0.95s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: clip-path 1.6s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 /* ---- star-tap magical page transition ---- */
@@ -156,11 +156,11 @@
 }
 .magic-veil.go {
   clip-path: circle(150vmax at var(--ox) var(--oy));
-  transition: clip-path 0.95s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: clip-path 1.6s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .magic-veil.fade {
   opacity: 0;
-  transition: opacity 0.5s ease;
+  transition: opacity 0.8s ease;
 }
 .magic-spark {
   position: absolute;
@@ -173,7 +173,7 @@
   box-shadow: 0 0 14px 5px rgba(255, 196, 208, 0.5);
   transform: translate(-50%, -50%) scale(1);
   opacity: 0;
-  animation: magic-spark 1.15s ease-out forwards;
+  animation: magic-spark 1.7s ease-out forwards;
 }
 @keyframes magic-spark {
   0% { opacity: 0; }

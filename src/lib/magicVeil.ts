@@ -22,9 +22,9 @@ export function launchMagicVeil(x: number, y: number, onCovered: () => void) {
   }
   document.body.appendChild(veil);
   requestAnimationFrame(() => requestAnimationFrame(() => veil.classList.add("go")));
-  window.setTimeout(onCovered, 980); // navigate while fully covered
+  window.setTimeout(onCovered, 1500); // navigate while fully covered
   window.setTimeout(() => {
     veil.classList.add("fade");
-    window.setTimeout(() => veil.remove(), 520);
-  }, 1080);
+    window.setTimeout(() => veil.remove(), 850);
+  }, 1620);
 }

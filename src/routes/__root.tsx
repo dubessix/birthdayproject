@@ -138,8 +138,25 @@ function RootShell({ children }: { children: ReactNode }) {
     >
       <head>
         <HeadContent />
+        <link rel="preload" as="image" href="/media/stickers/panda-heart.webp" />
       </head>
       <body>
+        {/* boot loader: paints with the first HTML so she never sees a black stuck screen */}
+        <div
+          id="boot"
+          style={{ position: "fixed", inset: 0, zIndex: 9999, background: "#241a2e", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 18, transition: "opacity .6s ease" }}
+        >
+          <img
+            src="/media/stickers/panda-heart.webp"
+            alt=""
+            style={{ width: 96, borderRadius: 18, border: "4px solid rgba(255,255,255,.92)", boxShadow: "0 18px 50px -18px rgba(0,0,0,.8)" }}
+          />
+          <div style={{ width: 220, height: 18, borderRadius: 999, border: "2px solid rgba(140,60,80,.65)", background: "rgba(255,255,255,.94)", overflow: "hidden" }}>
+            <div style={{ height: "100%", width: "38%", borderRadius: 999, background: "repeating-linear-gradient(45deg,#f87f9f 0 10px,#fba7bc 10px 20px)", animation: "bootslide 1.15s linear infinite" }} />
+          </div>
+          <div style={{ fontSize: 11, letterSpacing: ".3em", color: "rgba(255,205,218,.8)" }}>LOADING…</div>
+        </div>
+        <style>{"@keyframes bootslide{from{transform:translateX(-110%)}to{transform:translateX(360%)}} .boot-done{opacity:0;pointer-events:none}"}</style>
         {children}
         <Scripts />
       </body>
@@ -149,6 +166,41 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  // hide the boot loader once the app is hydrated and the first assets are cached
+  useEffect(() => {
+    const assets = [
+      "/media/stickers/panda-heart.webp",
+      "/media/stickers/wait-bunny.webp",
+      "/media/photos/1.jpg",
+      "/media/audio/chosen-ring.mp3",
+      "/media/img/envelope-closed.webp",
+    ];
+    const start = performance.now();
+    let done = 0;
+    let finished = false;
+    const finish = () => {
+      if (finished) return;
+      finished = true;
+      const waitMs = Math.max(0, 900 - (performance.now() - start));
+      window.setTimeout(() => {
+        const b = document.getElementById("boot");
+        if (!b) return;
+        b.classList.add("boot-done");
+        window.setTimeout(() => b.remove(), 700);
+      }, waitMs);
+    };
+    assets.forEach((src) => {
+      fetch(src, { cache: "force-cache" })
+        .catch(() => {})
+        .finally(() => {
+          done += 1;
+          if (done >= assets.length) finish();
+        });
+    });
+    const safety = window.setTimeout(finish, 7000);
+    return () => window.clearTimeout(safety);
+  }, []);
+
   return (
     <QueryClientProvider client={queryClient}>
       <JourneyProvider>

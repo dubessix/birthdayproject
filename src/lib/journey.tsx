@@ -60,6 +60,7 @@ export function JourneyProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const playTrack = useCallback((i: number) => {
+    if (cakeHowl.current?.playing()) cakeHowl.current.stop(); // one sound at a time, always
     const prev = howls.current[current.current];
     if (prev && prev.playing()) prev.pause();
     current.current = i;
@@ -73,6 +74,8 @@ export function JourneyProvider({ children }: { children: ReactNode }) {
   const playMusic = useCallback(() => playTrack(0), [playTrack]);
 
   const toggleMusic = useCallback(() => {
+    if (cakeHowl.current?.playing()) { cakeHowl.current.pause(); cakePaused.current = true; return; }
+    if (cakeHowl.current && cakePaused.current) { cakeHowl.current.play(); cakePaused.current = false; return; }
     const h = howls.current[current.current] ?? ensureHowl(current.current);
     if (!h) { setMusicFailed(true); return; }
     if (h.playing()) h.pause();
@@ -82,6 +85,7 @@ export function JourneyProvider({ children }: { children: ReactNode }) {
 
   // --- cake moment: a cheerful happy-birthday cue that takes over, then hands back ---
   const cakeHowl = useRef<Howl | null>(null);
+  const cakePaused = useRef(false);
   const resumeWasOn = useRef(false);
 
   const playCakeTune = useCallback(() => {
@@ -102,11 +106,13 @@ export function JourneyProvider({ children }: { children: ReactNode }) {
         onplayerror: () => { setMusicOn(false); setMusicFailed(true); },
       });
     }
+    cakePaused.current = false;
     cakeHowl.current.play();
   }, []);
 
   const stopCakeTune = useCallback(() => {
     cakeHowl.current?.stop();
+    cakePaused.current = false;
     const main = howls.current[current.current];
     if (main && resumeWasOn.current) main.play();
     resumeWasOn.current = false;

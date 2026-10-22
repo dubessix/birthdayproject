@@ -1,6 +1,4 @@
 import { createFileRoute, Outlet, useLocation, useNavigate } from "@tanstack/react-router";
-import { launchMagicVeil } from "@/lib/magicVeil";
-import { usePrefersReducedMotion } from "@/lib/useReducedMotion";
 import { useEffect } from "react";
 import { useJourney } from "@/lib/journey";
 
@@ -28,27 +26,5 @@ function JourneyLayout() {
     }
   }, [hydrated, unlocked, pathname, nav]);
 
-    // hold/press any [data-veilnav] button: ink fills the button, then the same
-  // colour swells from the tap point across the whole screen, and the next
-  // page is revealed as the light fades. keyboard users get instant nav.
-  const reduced = usePrefersReducedMotion();
-  useEffect(() => {
-    const down = (e: PointerEvent) => {
-      const t = e.target as HTMLElement;
-      const btn = t.closest ? (t.closest("button[data-veilnav]") as HTMLButtonElement | null) : null;
-      if (!btn || btn.disabled || reduced) return;
-      if (document.querySelector(".magic-veil")) return;
-      e.preventDefault(); // hold the natural click; we click once covered
-      const x = e.clientX;
-      const y = e.clientY;
-      window.setTimeout(() => {
-        if (document.querySelector(".magic-veil")) return;
-        launchMagicVeil(x, y, () => btn.click());
-      }, 430);
-    };
-    document.addEventListener("pointerdown", down, true);
-    return () => document.removeEventListener("pointerdown", down, true);
-  }, [reduced]);
-
-  return <Outlet />;
+    return <Outlet />;
 }
