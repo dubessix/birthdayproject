@@ -1,8 +1,10 @@
 import { useEffect, useRef } from "react";
+import { usePrefersReducedMotion } from "@/lib/useReducedMotion";
 
 /** Animated starfield + soft cursor glow. Respects prefers-reduced-motion (static sky). */
 export function StarField({ density = 0.00015 }: { density?: number }) {
   const ref = useRef<HTMLCanvasElement>(null);
+  const reduced = usePrefersReducedMotion();
 
   useEffect(() => {
     const canvas = ref.current;
@@ -17,7 +19,7 @@ export function StarField({ density = 0.00015 }: { density?: number }) {
     let raf = 0;
     let stars: { x: number; y: number; r: number; a: number; s: number }[] = [];
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    let mouse = { x: -9999, y: -9999 };
+    const mouse = { x: -9999, y: -9999 };
 
     const seed = () => {
       const w = window.innerWidth;
@@ -92,7 +94,7 @@ export function StarField({ density = 0.00015 }: { density?: number }) {
       window.removeEventListener("touchmove", onMove);
       window.removeEventListener("mouseleave", onLeave);
     };
-  }, [density]);
+  }, [density, reduced]);
 
   return <canvas ref={ref} className="pointer-events-none fixed inset-0 z-0" aria-hidden />;
 }

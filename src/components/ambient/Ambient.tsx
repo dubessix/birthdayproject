@@ -1,15 +1,10 @@
-import { useState } from "react";
 import { StarField } from "./StarField";
+import { usePrefersReducedMotion } from "@/lib/useReducedMotion";
 
 /** Full-screen ambient layer: gradient wash + starfield + floating petals & fireflies.
  *  Petals/fireflies are skipped entirely for prefers-reduced-motion users. */
 export function Ambient({ intensity = 1 }: { intensity?: number }) {
-  const [reduced] = useState(
-    () =>
-      typeof window !== "undefined" &&
-      typeof window.matchMedia === "function" &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches,
-  );
+  const reduced = usePrefersReducedMotion();
   const petalCount = Math.round(10 * intensity);
   const fireflyCount = Math.round(14 * intensity);
   return (

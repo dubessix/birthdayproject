@@ -26,7 +26,7 @@ function EnvelopeScene() {
 
   // preload the opened state so the crossfade never flashes
   useEffect(() => {
-    ["/media/img/envelope-closed.png", "/media/img/envelope-open.png"].forEach((s) => {
+    ["/media/img/envelope-closed.webp", "/media/img/envelope-open.webp"].forEach((s) => {
       const im = new Image();
       im.src = s;
     });
@@ -71,7 +71,7 @@ function EnvelopeScene() {
           <button onClick={() => setOpen(true)} disabled={open} aria-label="Open envelope" className="relative z-10 block w-full">
             <div className="relative aspect-[16/9] w-full">
               <motion.img
-                src="/media/img/envelope-closed.png"
+                src="/media/img/envelope-closed.webp"
                 alt="Sealed rose envelope with a crimson wax seal"
                 className="absolute inset-0 h-full w-full object-contain [mask-image:radial-gradient(ellipse_at_center,black_66%,transparent_100%)]"
                 animate={{ opacity: open ? 0 : 1, scale: open ? 1.06 : 1, y: open ? 0 : [0, -7, 0] }}
@@ -82,7 +82,7 @@ function EnvelopeScene() {
                 }
               />
               <motion.img
-                src="/media/img/envelope-open.png"
+                src="/media/img/envelope-open.webp"
                 alt="Opened envelope with the flap raised"
                 className="absolute inset-0 h-full w-full object-contain [mask-image:radial-gradient(ellipse_at_center,black_66%,transparent_100%)]"
                 initial={{ opacity: 0, scale: 0.96 }}

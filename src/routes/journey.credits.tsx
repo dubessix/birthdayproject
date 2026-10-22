@@ -78,7 +78,7 @@ function Credits() {
         <motion.div {...fade(0.8)}>
           <motion.button
             onClick={() => {
-              try { sessionStorage.removeItem("hena:unlocked"); } catch {}
+              try { sessionStorage.removeItem("hena:unlocked"); } catch { /* storage may be unavailable */ }
               nav({ to: "/" });
             }}
             whileHover={{ scale: 1.05 }}
@@ -93,7 +93,7 @@ function Credits() {
         <motion.div {...fade(1)} className="mt-9">
           <button
             onClick={() => setEgg((v) => !v)}
-            className="-m-3 p-3 text-[11px] tracking-[0.3em] text-rose-200/35 transition hover:text-rose-200/70"
+            className="-m-3 p-3 rounded text-[11px] tracking-[0.3em] text-rose-200/35 transition hover:text-rose-200/70 focus-visible:text-rose-200/70 focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-rose-200/40"
           >
             · p.s. ·
           </button>

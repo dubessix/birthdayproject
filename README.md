@@ -438,20 +438,6 @@ Every animation should feel smooth.
 
 Every page should surprise the user.
 
-The final result should be memorable, elegant, and emotionally warm while remaining respectful and not overwhelming.
-
-Generate complete production-ready code with clean folder structure, reusable React components, and comments where useful.      ( Make an professional and ultimate gift 🎁 for my ultold love that i cmake his face smile )
-
-This project was built with [Lovable](https://lovable.dev).
-
-## Build with Lovable
-
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/054442a9-1310-4cc8-a815-704bdd935cfd).
-
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: every change made in Lovable is committed straight to this repository.
-- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
-
 ## Development
 
 Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).

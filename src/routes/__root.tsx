@@ -11,7 +11,6 @@ import { AnimatePresence, MotionConfig } from "framer-motion";
 import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
-import { reportLovableError } from "../lib/lovable-error-reporting";
 import { JourneyProvider } from "../lib/journey";
 import { Ambient } from "../components/ambient/Ambient";
 import { content } from "../lib/content";
@@ -37,9 +36,6 @@ function NotFoundComponent() {
 
 function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   const router = useRouter();
-  useEffect(() => {
-    reportLovableError(error, { boundary: "tanstack_root_error_component" });
-  }, [error]);
   return (
     <div className="relative z-10 flex min-h-[100dvh] items-center justify-center px-4">
       <div className="max-w-md text-center">
@@ -63,14 +59,19 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   {
-    head: () => ({
+    head: () => {
+      // Absolute Open Graph URLs need the production origin. Set VITE_SITE_URL at deploy
+      // time (e.g. VITE_SITE_URL=https://your-site.netlify.app). Without it we fall back
+      // to a root-relative path rather than inventing a domain. The star icon reveals no secrets.
+      const siteUrl = (import.meta.env?.VITE_SITE_URL as string | undefined)?.replace(/\/$/, "") ?? "";
+      return {
       meta: [
         { charSet: "utf-8" },
         {
           name: "viewport",
           content: "width=device-width, initial-scale=1, viewport-fit=cover",
         },
-        { name: "theme-color", content: "#0d0b18" },
+        { name: "theme-color", content: "#241a2e" },
         { title: "A little something for you 🌸" },
         {
           name: "description",
@@ -83,7 +84,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           content: "A quiet, cinematic birthday letter.",
         },
         { property: "og:type", content: "website" },
-        { property: "og:image", content: "/icons/android-chrome-512.png" },
+        { property: "og:image", content: `${siteUrl}/icons/android-chrome-512.png` },
         { name: "twitter:card", content: "summary_large_image" },
       ],
       links: [
@@ -120,7 +121,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           href: "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Caveat:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap",
         },
       ],
-    }),
+    };
+    },
     shellComponent: RootShell,
     component: RootComponent,
     notFoundComponent: NotFoundComponent,
