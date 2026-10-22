@@ -138,7 +138,7 @@ function RootShell({ children }: { children: ReactNode }) {
     >
       <head>
         <HeadContent />
-        <link rel="preload" as="image" href="/media/stickers/panda-heart.webp" />
+        <link rel="preload" as="image" href="/media/stickers/wait-bunny.webp" />
       </head>
       <body>
         {/* boot loader: paints with the first HTML so she never sees a black stuck screen */}
@@ -147,9 +147,9 @@ function RootShell({ children }: { children: ReactNode }) {
           style={{ position: "fixed", inset: 0, zIndex: 9999, background: "#241a2e", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 18, transition: "opacity .6s ease" }}
         >
           <img
-            src="/media/stickers/panda-heart.webp"
+            src="/media/stickers/wait-bunny.webp"
             alt=""
-            style={{ width: 96, borderRadius: 18, border: "4px solid rgba(255,255,255,.92)", boxShadow: "0 18px 50px -18px rgba(0,0,0,.8)" }}
+            style={{ width: 108, borderRadius: 18, border: "4px solid rgba(255,255,255,.92)", boxShadow: "0 18px 50px -18px rgba(0,0,0,.8)" }}
           />
           <div style={{ width: 220, height: 18, borderRadius: 999, border: "2px solid rgba(140,60,80,.65)", background: "rgba(255,255,255,.94)", overflow: "hidden" }}>
             <div style={{ height: "100%", width: "38%", borderRadius: 999, background: "repeating-linear-gradient(45deg,#f87f9f 0 10px,#fba7bc 10px 20px)", animation: "bootslide 1.15s linear infinite" }} />

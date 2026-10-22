@@ -23,27 +23,31 @@ function MusicScene() {
       <GlassCard className="w-full max-w-sm text-center">
         <h1 className="font-display text-2xl text-rose-900 dark:text-rose-100">{content.musicPage.title}</h1>
 
-        <div className="mx-auto mt-6 grid h-52 w-52 place-items-center">
+        <div className="relative mx-auto mt-6 h-44 w-44">
+          <div aria-hidden className="absolute -inset-6 rounded-full bg-[radial-gradient(circle,rgba(255,214,150,0.3),rgba(248,183,192,0.15)_55%,transparent_75%)] blur-md" />
           <motion.div
-            className="relative h-52 w-52 rounded-full bg-gradient-to-br from-rose-300 via-amber-200 to-lilac shadow-2xl"
+            className="relative h-44 w-44 rounded-full bg-[conic-gradient(from_0deg,#fda4af,#fcd34d,#c4b5fd,#fda4af)] shadow-[0_18px_60px_-18px_rgba(244,63,94,0.55)]"
             animate={{ rotate: musicOn ? 360 : 0 }}
-            transition={{ repeat: musicOn ? Infinity : 0, duration: 8, ease: "linear" }}
+            transition={{ duration: 8, ease: "linear", repeat: musicOn ? Infinity : 0 }}
           >
-            <div className="absolute inset-6 rounded-full bg-gradient-to-br from-rose-400 to-rose-600" />
-            <div className="absolute inset-14 rounded-full bg-white/90 shadow-inner" />
-            <div className="absolute left-1/2 top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-rose-950" />
+            <div className="absolute inset-3 rounded-full bg-[repeating-radial-gradient(circle,rgba(0,0,0,0.13)_0_2px,transparent_2px_5px)]" />
+            <div className="absolute inset-0 grid place-items-center">
+              <div className="grid h-16 w-16 place-items-center rounded-full bg-white/95 shadow-inner">
+                <span className="h-3 w-3 rounded-full bg-rose-950" />
+              </div>
+            </div>
           </motion.div>
         </div>
 
-        <p className="mt-5 font-display text-xl">{content.music[trackIndex]?.title}</p>
-        <p className="text-xs text-muted-foreground">{content.music[trackIndex]?.artist}</p>
+        <p className="mt-5 font-display text-lg text-rose-100">{content.music[trackIndex]?.title}</p>
+        <p className="mt-0.5 text-[11px] text-muted-foreground">{content.music[trackIndex]?.artist}</p>
 
-        <div className="mt-5 flex items-center justify-center gap-4">
+        <div className="mt-4 flex items-center justify-center gap-4">
           <button
             onClick={() => (musicOn ? toggleMusic() : playTrack(trackIndex))}
-            onPointerDown={tapFill("rgba(255,255,255,0.35)")}
+            onPointerDown={tapFill("rgba(248,183,192,0.85)")}
             aria-label={musicOn ? "Pause" : "Play"}
-            className="relative isolate grid h-14 w-14 place-items-center overflow-hidden rounded-full bg-rose-500 text-white shadow-xl transition hover:scale-105"
+            className="relative isolate grid h-14 w-14 place-items-center overflow-hidden rounded-full bg-rose-500 text-white shadow-xl shadow-rose-900/40 transition hover:scale-105"
           >
             {musicOn ? <HiOutlinePause className="h-6 w-6" /> : <HiOutlinePlay className="h-6 w-6" />}
           </button>
@@ -83,7 +87,15 @@ function MusicScene() {
                 }}
               />
               <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-white/10 text-[11px]">
-                {i === trackIndex && musicOn ? <HiOutlinePause className="h-3.5 w-3.5" /> : <HiOutlinePlay className="h-3.5 w-3.5" />}
+                {i === trackIndex && musicOn ? (
+                  <span className="flex h-3.5 items-end gap-[3px]" aria-hidden>
+                    {[0, 1, 2].map((b) => (
+                      <span key={b} className="eq-bar" style={{ animationDelay: `${b * 0.16}s` }} />
+                    ))}
+                  </span>
+                ) : (
+                  <HiOutlinePlay className="h-3.5 w-3.5" />
+                )}
               </span>
               <span className="min-w-0">
                 <span className="block truncate text-sm font-medium">{t.title}</span>

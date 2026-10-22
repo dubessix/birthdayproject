@@ -79,21 +79,7 @@ function Loading() {
           />
         </div>
         <p className="mt-2 text-[11px] tracking-[0.25em] text-rose-200/70">{shown < 100 ? "LOADING…" : "ALL READY ✨"}</p>
-        <div className="mt-3 min-h-[112px]">
-          <AnimatePresence>
-            {shown < 100 && (
-              <motion.img
-                key="bunny"
-                src="/media/stickers/wait-bunny.webp"
-                alt="A cartoon bunny asking you to wait a moment while things load"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.92 }}
-                className="mx-auto w-28 rotate-2 rounded-2xl border-4 border-white/90 shadow-xl"
-              />
-            )}
-          </AnimatePresence>
-        </div>
+
 
         <div className="mt-8 flex flex-col items-center gap-3">
           {!musicOn && (

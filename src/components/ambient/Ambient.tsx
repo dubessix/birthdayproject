@@ -5,8 +5,8 @@ import { usePrefersReducedMotion } from "@/lib/useReducedMotion";
  *  Petals/fireflies are skipped entirely for prefers-reduced-motion users. */
 export function Ambient({ intensity = 1 }: { intensity?: number }) {
   const reduced = usePrefersReducedMotion();
-  const petalCount = Math.round(10 * intensity);
-  const fireflyCount = Math.round(14 * intensity);
+  const petalCount = Math.round(8 * intensity);
+  const fireflyCount = Math.round(10 * intensity);
   return (
     <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden" aria-hidden>
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,var(--tw-gradient-stops))] from-rose-200/20 via-transparent to-transparent dark:from-rose-500/10" />

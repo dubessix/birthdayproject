@@ -93,12 +93,12 @@ function Final() {
         </motion.h1>
 
         <motion.div
-          className="mx-auto mt-8 max-w-lg rounded-2xl border border-white/10 bg-white/[0.04] px-6 py-5 shadow-[0_20px_60px_-30px_rgba(0,0,0,0.9)] backdrop-blur-xl"
+          className="mx-auto mt-6 max-w-lg rounded-2xl border border-white/10 bg-white/[0.04] px-5 py-4 shadow-[0_20px_60px_-30px_rgba(0,0,0,0.9)] backdrop-blur-xl"
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: phase === "text" ? 1 : 0, y: 0 }}
           transition={{ delay: 1, duration: 1 }}
         >
-          <p className="whitespace-pre-line text-base leading-relaxed text-rose-100/85">{content.finalMessage}</p>
+          <p className="whitespace-pre-line text-[15px] leading-snug text-rose-100/85">{content.finalMessage}</p>
         </motion.div>
 
         <motion.button
