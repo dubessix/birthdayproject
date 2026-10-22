@@ -76,9 +76,14 @@
   "musicPage": {
     "title": "for your ears",
     "nextLabel": "Continue →",
-    "feature": ""
+    "feature": "/media/audio/bairi-piya.mp3"
   },
   "music": [
+    {
+      "src": "/media/audio/bairi-piya.mp3",
+      "title": "bairi piya — shreya ghoshal",
+      "sub": "the song that plays when you arrive 😌"
+    },
     {
       "title": "the one you picked 💗",
       "artist": "your ringtone, on loop",
