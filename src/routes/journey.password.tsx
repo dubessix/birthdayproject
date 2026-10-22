@@ -82,7 +82,7 @@ function Password() {
                     src="/media/memes/birthday-sign.jpg"
                     alt="A cartoon friend holding a colourful Happy Birthday sign"
                     onError={() => setTeaserBroken(true)}
-                    className="absolute inset-0 z-10 h-full w-full rounded-sm object-cover object-[50%_45%]"
+                    className="absolute inset-0 z-10 h-full w-full rounded-sm object-contain object-center p-1"
                   />
                 )}
               </div>

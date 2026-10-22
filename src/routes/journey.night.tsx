@@ -17,8 +17,14 @@ function Moon() {
       animate={{ y: [0, -10, 0] }}
       transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
     >
+      {/* warm halo so the moon glows in the site's champagne-rose palette */}
+      <div aria-hidden className="absolute -inset-8 rounded-full bg-[radial-gradient(circle,rgba(255,236,190,0.34)_0%,rgba(250,190,200,0.16)_45%,transparent_70%)] blur-md" />
       {/* crescent carved with an inset shadow so no opaque disc shows on the sky */}
-      <div className="absolute inset-0 rounded-full shadow-[inset_22px_-10px_0_0_#f2f5ff] drop-shadow-[0_0_28px_rgba(200,215,255,0.45)]" />
+      <div className="absolute inset-0 rounded-full shadow-[inset_22px_-10px_0_0_#fff6e0] drop-shadow-[0_0_30px_rgba(255,224,170,0.55)]" />
+      {/* tiny stars keeping the moon company */}
+      <span aria-hidden className="absolute -left-6 top-3 h-1 w-1 rounded-full bg-amber-100/90 shadow-[0_0_8px_2px_rgba(255,220,160,0.5)]" />
+      <span aria-hidden className="absolute -right-5 bottom-6 h-1.5 w-1.5 rounded-full bg-rose-100/80 shadow-[0_0_10px_3px_rgba(255,190,200,0.45)]" />
+      <span aria-hidden className="absolute -right-2 -top-4 h-1 w-1 rounded-full bg-white/80 shadow-[0_0_8px_2px_rgba(255,255,255,0.4)]" />
     </motion.div>
   );
 }
@@ -33,9 +39,12 @@ function Night() {
     <SceneShell>
       <div className="relative w-full max-w-2xl text-center">
         {/* tap the moon 3 times — a secret just for the curious */}
-        <button
+        <motion.button
           onClick={() => setMoonTaps((t) => t + 1)}
           aria-label="the moon"
+          initial={{ opacity: 0, y: 26, scale: 0.9 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
           className="relative mx-auto block cursor-pointer"
         >
           <Moon />
@@ -64,7 +73,7 @@ function Night() {
               </>
             )}
           </AnimatePresence>
-        </button>
+        </motion.button>
 
         {/* a shooting star, every so often */}
         <motion.span
