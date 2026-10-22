@@ -75,7 +75,8 @@
   },
   "musicPage": {
     "title": "for your ears",
-    "nextLabel": "Continue →"
+    "nextLabel": "Continue →",
+    "feature": ""
   },
   "music": [
     {

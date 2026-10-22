@@ -1,7 +1,7 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { HiOutlinePause, HiOutlinePlay } from "react-icons/hi2";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { tapFill } from "@/lib/tapfill";
 import { SceneShell } from "@/components/layout/SceneShell";
 import { GlassCard } from "@/components/ui/GlassCard";
@@ -17,6 +17,15 @@ export const Route = createFileRoute("/journey/music")({
 function MusicScene() {
   const [fillOrigin, setFillOrigin] = useState<{ i: number; x: number; y: number } | null>(null);
   const [gate, setGate] = useState(false);
+
+  // when she arrives on this page, the featured song (e.g. her Hindi pick) takes over
+  useEffect(() => {
+    const src = content.musicPage.feature;
+    if (!src) return;
+    const idx = content.music.findIndex((t) => t.src === src);
+    if (idx >= 0 && idx !== trackIndex) playTrack(idx);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const nav = useNavigate();
   const { musicOn, musicFailed, toggleMusic, playTrack, trackIndex } = useJourney();
 
