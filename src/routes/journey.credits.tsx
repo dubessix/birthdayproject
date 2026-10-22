@@ -75,6 +75,15 @@ function Credits() {
           {content.credits.ps}
         </motion.p>
 
+        <motion.div {...fade(0.72)} className="mt-7">
+          <img
+            src="/media/memes/not-that-special.jpg"
+            alt="A cartoon figure scratching his head with the caption: ab mai itna bhi kuch khass nahi"
+            className="mx-auto w-40 rotate-2 rounded-lg border-4 border-white/90 shadow-xl"
+          />
+          <p className="mt-2 font-hand text-sm text-rose-200/75">{content.credits.memeCaption}</p>
+        </motion.div>
+
         <motion.div {...fade(0.8)}>
           <motion.button
             onClick={() => {

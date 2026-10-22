@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { motion } from "framer-motion";
-import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { useLayoutEffect, useState } from "react";
 import { SceneShell } from "@/components/layout/SceneShell";
 import { content } from "@/lib/content";
 
@@ -64,8 +64,40 @@ function Polaroid({ i, caption, secret, src }: { i: number; caption: string; sec
 
 function Memories() {
   const nav = useNavigate();
+  const [noteOpen, setNoteOpen] = useState(true);
+  useLayoutEffect(() => {
+    try { if (sessionStorage.getItem("hena:note-seen") === "1") setNoteOpen(false); } catch {}
+  }, []);
+
   return (
     <SceneShell>
+      <AnimatePresence>
+        {noteOpen && (
+          <motion.div
+            className="fixed inset-0 z-40 grid place-items-center bg-black/55 p-6 backdrop-blur-sm"
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+          >
+            <motion.div
+              initial={{ opacity: 0, y: 18, scale: 0.96 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.97 }}
+              className="w-full max-w-sm rounded-3xl border border-white/15 bg-white/10 p-6 text-center shadow-2xl backdrop-blur-xl"
+            >
+              <h2 className="font-display text-xl text-rose-100">{content.memories.apologyTitle}</h2>
+              <p className="mt-3 text-sm leading-relaxed text-rose-100/85">{content.memories.apology}</p>
+              <button
+                onClick={() => {
+                  setNoteOpen(false);
+                  try { sessionStorage.setItem("hena:note-seen", "1"); } catch {}
+                }}
+                className="mt-5 min-h-11 rounded-full bg-rose-500/90 px-7 py-2.5 text-sm text-white shadow-lg shadow-rose-900/40 transition hover:scale-[1.03]"
+              >
+                {content.memories.apologyButton}
+              </button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
       <div className="w-full max-w-4xl">
         <h1 className="text-center font-display text-3xl text-rose-900 dark:text-rose-100">{content.memories.title}</h1>
         <p className="mt-1 text-center text-sm text-muted-foreground">{content.memories.subtitle}</p>

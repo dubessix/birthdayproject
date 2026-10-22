@@ -28,7 +28,10 @@
   "memories": {
     "title": "a few little favourites",
     "subtitle": "tap a polaroid to flip",
-    "nextLabel": "To the cake →"
+    "nextLabel": "To the cake →",
+    "apologyTitle": "a tiny confession first 🙈",
+    "apology": "Some of these pictures I saved from your Instagram — I hope that's okay. And a few of the pretty little backgrounds are AI-made. But every word underneath them? 100% me, 0% AI. Forgive the borrowed pictures — they were too good not to keep 🌸",
+    "apologyButton": "okay, show me 😌"
   },
   "photos": [
     {
@@ -137,6 +140,7 @@
     "signature": "Made with care by Debjeet",
     "thanks": "Thank you for taking the journey.",
     "restart": "Restart Journey",
-    "ps": "P.S. Hope this made you smile a little 😂🌸"
+    "ps": "P.S. Hope this made you smile a little 😂🌸",
+    "memeCaption": "the maker of this website, apparently 😅"
   }
 }

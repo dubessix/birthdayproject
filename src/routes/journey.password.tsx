@@ -77,6 +77,11 @@ function Password() {
               <div className="h-28 w-32 rounded-sm bg-gradient-to-br from-rose-200 via-amber-100 to-lilac" />
               <p className="mt-2 text-center font-hand text-sm text-rose-900">a small secret</p>
             </div>
+            <img
+              src="/media/memes/birthday-sign.jpg"
+              alt="A little cartoon friend holding a colourful Happy Birthday sign"
+              className="mx-auto mt-4 w-32 -rotate-2 rounded-lg border-4 border-white shadow-lg"
+            />
             <h1 className="mt-5 font-display text-2xl text-foreground">Enter the secret key</h1>
             <p className="mt-1 text-xs text-muted-foreground">{content.secret.password.length} digits — keypad or keyboard</p>
           </div>

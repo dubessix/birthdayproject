@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import { TypeWriter } from "@/components/ui/TypeWriter";
 import { content } from "@/lib/content";
+import { usePrefersReducedMotion } from "@/lib/useReducedMotion";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -20,6 +21,7 @@ function Intro() {
   const navigate = useNavigate();
   const [showStar, setShowStar] = useState(false);
   const [leaving, setLeaving] = useState(false);
+  const reduced = usePrefersReducedMotion();
 
   return (
     <motion.main
@@ -43,6 +45,10 @@ function Intro() {
             <motion.button
               key="star"
               onClick={() => {
+                if (reduced) {
+                  navigate({ to: "/journey/password" });
+                  return;
+                }
                 setLeaving(true);
                 setTimeout(() => navigate({ to: "/journey/password" }), 1100);
               }}
@@ -63,6 +69,16 @@ function Intro() {
           )}
         </AnimatePresence>
       </div>
-    </motion.main>
+          {/* bottom-to-top light fill on star tap */}
+      {leaving && !reduced && (
+        <motion.div
+          aria-hidden
+          className="pointer-events-none fixed inset-0 z-30 bg-gradient-to-t from-rose-500/90 via-amber-200/85 to-rose-200/75 shadow-[0_-24px_90px_24px_rgba(255,220,180,0.65)]"
+          initial={{ clipPath: "inset(100% 0% 0% 0%)" }}
+          animate={{ clipPath: "inset(0% 0% 0% 0%)" }}
+          transition={{ duration: 1.05, ease: [0.22, 1, 0.36, 1] }}
+        />
+      )}
+</motion.main>
   );
 }
