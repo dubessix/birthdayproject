@@ -59,6 +59,19 @@ function Letter() {
               tap the letter to reveal instantly
             </p>
           )}
+
+          {/* margin doodle — like a pen test before writing */}
+          <svg aria-hidden viewBox="0 0 48 48" className="pointer-events-none absolute bottom-3 right-4 h-11 w-11 opacity-35">
+              <g fill="none" stroke="#7f1d1d" strokeWidth="1.6" strokeLinecap="round">
+                <ellipse cx="19" cy="14" rx="3.2" ry="8" transform="rotate(-9 19 14)" />
+                <ellipse cx="27" cy="14" rx="3.2" ry="8" transform="rotate(9 27 14)" />
+                <circle cx="23" cy="28" r="9" />
+                <path d="M19.5,27 q1,1.6 2,0 q1,1.6 2,0" />
+                <circle cx="19.5" cy="25" r="0.7" fill="#7f1d1d" />
+                <circle cx="26.5" cy="25" r="0.7" fill="#7f1d1d" />
+                <path d="M38,8 l1.6,3.4 3.6,0.4 -2.7,2.4 0.8,3.5 -3.3,-1.9 -3.3,1.9 0.8,-3.5 -2.7,-2.4 3.6,-0.4 Z" strokeWidth="1.2" />
+              </g>
+            </svg>
         </div>
 
         <div className="mt-6 flex justify-center">

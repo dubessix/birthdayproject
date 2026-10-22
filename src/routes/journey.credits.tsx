@@ -69,6 +69,16 @@ function Credits() {
           {content.credits.thanks}
         </motion.p>
 
+        <motion.div {...fade(0.7)} className="mt-7 inline-block -rotate-6">
+          <div className="rounded-full border-2 border-rose-400/55 p-1">
+            <div className="rounded-full border border-rose-400/55 px-5 py-2.5 font-hand text-rose-300/85">
+              <p className="text-sm leading-tight">certified handmade</p>
+              <p className="text-[11px] leading-tight tracking-[0.2em]">by debjeet</p>
+              <p className="text-[11px] leading-tight">no refunds, only hugs 🤗</p>
+            </div>
+          </div>
+        </motion.div>
+
         <motion.p
           {...fade(0.65)}
           className="mt-4 inline-block rounded-full border border-rose-200/20 bg-rose-200/[0.06] px-5 py-2 font-hand text-base text-rose-100/85"

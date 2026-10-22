@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useEffect, useState } from "react";
 import confetti from "canvas-confetti";
 import { SceneShell } from "@/components/layout/SceneShell";
@@ -23,6 +23,32 @@ function fireConfetti() {
 }
 
 /** Candle: stick + wick + teardrop flame that sits exactly on the wick. */
+
+function Bunting() {
+  const reduce = useReducedMotion();
+  const pts = [0.06, 0.17, 0.28, 0.39, 0.5, 0.61, 0.72, 0.83, 0.94].map((t) => ({
+    x: 2 * (1 - t) * t * 195 + t * t * 390,
+    y: (1 - t) * (1 - t) * 6 + 2 * (1 - t) * t * 26 + t * t * 6,
+  }));
+  const cols = ["#fda4af", "#fde68a", "#d9c7f2", "#fff7ec"];
+  return (
+    <motion.div
+      aria-hidden
+      className="pointer-events-none absolute inset-x-0 -top-14 z-0"
+      animate={reduce ? undefined : { rotate: [0, 1.2, 0] }}
+      transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+      style={{ originX: "50%", originY: "0%" }}
+    >
+      <svg viewBox="0 0 390 40" className="w-full">
+        <path d="M0,6 Q195,26 390,6" fill="none" stroke="#fff7ec" strokeOpacity="0.45" strokeWidth="1.5" />
+        {pts.map((p, i) => (
+          <path key={i} d={`M${p.x - 11},${p.y} L${p.x + 11},${p.y} L${p.x},${p.y + 20} Z`} fill={cols[i % 4]} opacity="0.85" />
+        ))}
+      </svg>
+    </motion.div>
+  );
+}
+
 function Candle({ blown, delay }: { blown: boolean; delay: number }) {
   return (
     <div className="relative mx-[5px] flex w-2.5 flex-col items-center">
@@ -83,6 +109,7 @@ function Cake() {
         transition={{ duration: 1 }}
       />
       <div className="relative z-10 flex w-full max-w-md flex-col items-center">
+        <Bunting />
         <h1 className="font-display text-4xl text-rose-100">{page.title}</h1>
 
         <motion.div

@@ -173,7 +173,7 @@ function Gift() {
                 key={drop}
                 onClick={collect}
                 aria-label="Next item"
-                className="absolute left-1/2 top-1/2 z-20 w-64 -translate-x-1/2 -translate-y-1/2"
+                className="absolute left-1/2 top-1/2 z-20 -translate-x-1/2 -translate-y-1/2"
                 initial={{ y: 70, opacity: 0, scale: 0.35, rotate: -4 }}
                 animate={{ y: 0, opacity: 1, scale: 1, rotate: 0 }}
                 exit={{ y: 60, opacity: 0, scale: 0.3, rotate: 5 }}
@@ -185,8 +185,15 @@ function Gift() {
                 >
                   {LOOT[drop - 1].rarity} {LOOT[drop - 1].stars} · {LOOT[drop - 1].klass}
                 </span>
-                <span className="block overflow-hidden rounded-xl border-4 border-cream bg-cream p-1 shadow-[0_24px_60px_-18px_rgba(0,0,0,0.85)]">
-                  <img src={LOOT[drop - 1].src} alt={LOOT[drop - 1].alt} className="mx-auto max-h-52 w-auto max-w-full object-contain" />
+                <span className="relative mx-auto block w-fit overflow-hidden rounded-xl border-4 border-cream bg-cream p-1 shadow-[0_24px_60px_-18px_rgba(0,0,0,0.85)]">
+                  <img src={LOOT[drop - 1].src} alt={LOOT[drop - 1].alt} className="mx-auto max-h-52 w-auto max-w-[16rem] object-contain" />
+                  <motion.span
+                    className="pointer-events-none absolute bottom-1.5 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-rose-950/70 px-2.5 py-0.5 text-[10px] tracking-wide text-rose-50 backdrop-blur-sm"
+                    animate={{ opacity: [0.55, 0.95, 0.55] }}
+                    transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+                  >
+                    tap to collect ▸
+                  </motion.span>
                 </span>
                 <span className="mt-1.5 block -rotate-1 rounded-xl bg-cream px-3 py-1.5 text-center font-hand text-base leading-tight text-rose-900 shadow-lg">
                   {LOOT[drop - 1].note}
@@ -219,12 +226,6 @@ function Gift() {
               </span>
             ))}
           </motion.div>
-        )}
-
-        {open && !done && drop >= 1 && (
-          <button onClick={() => setDrop(3)} className="mt-3 min-h-8 text-xs text-rose-100/45 underline underline-offset-4">
-            skip loots 😌
-          </button>
         )}
 
         {done && (
