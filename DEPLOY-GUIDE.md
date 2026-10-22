@@ -39,9 +39,8 @@ so one `git pull` + `git push` is enough.
 1. Go to **vercel.com → Sign up → Continue with GitHub** (same GitHub account).
 2. **Add New… → Project** → find `birthdayproject` → **Import**.
 3. Vercel auto-detects the setup. Check these on the import screen:
-   - Framework Preset: **Other** (or Vite — both work; the repo's `vercel.json` sets the build command)
-   - Build Command: `npm run build`  (already in `vercel.json`)
-   - Install Command: `npm install`  (already in `vercel.json`)
+   - Framework Preset: **TanStack Start** if offered, else **Other** — leave build/install commands auto
+   - The repo's `nitro()` Vite plugin emits Vercel's Build Output API (`.vercel/output`) itself; no vercel.json needed
    - Node.js version: **20.x or 22.x** (default is fine)
 4. Press **Deploy**. First deploy takes ~1–2 min. You get a URL like
    `https://birthdayproject-xxxx.vercel.app`.
