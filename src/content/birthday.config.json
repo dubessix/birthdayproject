@@ -1,0 +1,142 @@
+{
+  "theme": {
+    "mode": "dark"
+  },
+  "recipient": {
+    "name": "Hena",
+    "greeting": "Hello,Hena 🌸"
+  },
+  "author": {
+    "name": "Debjeet.",
+    "photo": "/media/author/debjeet.png"
+  },
+  "intro": {
+    "typedLine": "okay, so… I made a little something for your birthday 🌸",
+    "tapPrompt": "tap the start"
+  },
+  "secret": {
+    "password": "23102008",
+    "hint": "psst… try your birthday 🎂",
+    "maxAttempts": 3,
+    "wrongMessage": "Hehe... that's not the secret key 🐼"
+  },
+  "letter": {
+    "title": "a little letter, just for you",
+    "body": "Hey Hena,\n\nOkay, first of all, happy birthdayyy!! 🎂\n\nI was going to send a normal birthday message, but then I thought... why not do something a little different this time? So yeah, here's this little thing I made haha.\n\nI hope today gives you plenty of reasons to smile. Have some good food, enjoy your day, take way too many pictures, and save a little cake for later. 😭\n\nAnd seriously, I hope this year brings you some really good moments — the kind you remember even after a long time.\n\nAnyway, no long speech today. It's your day, so enjoy it properly.\n\nHappy Birthday again, Hena 🌸✨\n\n— Debjeet",
+    "nextLabel": "a few little favourites →"
+  },
+  "memories": {
+    "title": "a few little favourites",
+    "subtitle": "tap a polaroid to flip",
+    "nextLabel": "To the cake →"
+  },
+  "photos": [
+    {
+      "src": "/media/photos/1.jpg",
+      "caption": "birthday girl energy 🌸",
+      "secret": "hope today matches this energy ✨"
+    },
+    {
+      "src": "/media/photos/2.jpg",
+      "caption": "okay, this picture is actually cute 😂",
+      "secret": "no notes. perfect picture 😌"
+    },
+    {
+      "src": "/media/photos/3.jpg",
+      "caption": "main character moment ✨",
+      "secret": "confidence: unmatched 😎"
+    },
+    {
+      "src": "/media/photos/4.jpg",
+      "caption": "this one deserves a place here 📸",
+      "secret": "and here it stays 🖼️"
+    },
+    {
+      "src": "/media/photos/5.jpg",
+      "caption": "a little smile for your birthday 💗",
+      "secret": "hope it works 🙂"
+    },
+    {
+      "src": "/media/photos/6.jpg",
+      "caption": "one more reason to smile 🎂",
+      "secret": "cake maths: always correct 🍰"
+    }
+  ],
+  "cake": {
+    "title": "happy birthday 🎂",
+    "candles": 5,
+    "blowLabel": "Blow the candles",
+    "blowHint": "tap — the lights will dim",
+    "nextLabel": "Make a wish → play our song"
+  },
+  "musicPage": {
+    "title": "for your ears",
+    "nextLabel": "Continue →"
+  },
+  "music": [
+    {
+      "title": "For Hena",
+      "artist": "a soft piano",
+      "src": "/media/audio/soft-piano.wav"
+    },
+    {
+      "title": "Little Music Box",
+      "artist": "for quiet nights",
+      "src": "/media/audio/music-box.wav"
+    }
+  ],
+  "wishesPage": {
+    "title": "wishes for you",
+    "subtitle": "six small hopes, one for each part of your year",
+    "nextLabel": "Step into the night →"
+  },
+  "wishes": [
+    {
+      "text": "Stay Happy",
+      "emoji": "🌸",
+      "note": "Hope you get lots of reasons to smile."
+    },
+    {
+      "text": "Stay Healthy",
+      "emoji": "💖",
+      "note": "Take care of yourself, always."
+    },
+    {
+      "text": "Keep Smiling",
+      "emoji": "😊",
+      "note": "Hope this year brings you good laughs."
+    },
+    {
+      "text": "Chase Your Dreams",
+      "emoji": "✨",
+      "note": "One step at a time — you've got this."
+    },
+    {
+      "text": "Stay Blessed",
+      "emoji": "🌼",
+      "note": "Wishing you lots of good things."
+    },
+    {
+      "text": "Keep Being You",
+      "emoji": "💫",
+      "note": "Hope the year ahead treats you kindly."
+    }
+  ],
+  "night": {
+    "title": "a magical night",
+    "subtitle": "move your finger — the sky notices you",
+    "nextLabel": "Open your gift →"
+  },
+  "gift": {
+    "title": "a secret gift",
+    "subtitle": "tap the box",
+    "nextLabel": "Almost there →"
+  },
+  "finalMessage": "I hope this made you smile, even a little.\nHave a lovely birthday, Hena! 🌸\n\n— Debjeet",
+  "credits": {
+    "signature": "Made with care by Debjeet",
+    "thanks": "Thank you for taking the journey.",
+    "restart": "Restart Journey",
+    "ps": "P.S. Hope this made you smile a little 😂🌸"
+  }
+}
