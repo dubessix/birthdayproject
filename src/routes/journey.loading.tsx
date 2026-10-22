@@ -38,7 +38,6 @@ function Loading() {
       "/media/img/envelope-closed.webp",
       "/media/img/envelope-open.webp",
       "/media/audio/chosen-ring.mp3",
-      "/media/audio/soft-piano.mp3",
       "/media/audio/music-box.mp3",
       "/media/audio/birthday-tune.mp3",
       "/media/author/debjeet.png",
