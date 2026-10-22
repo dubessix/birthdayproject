@@ -27,7 +27,7 @@ const LOOT = [
     rarity: "COMMON",
     stars: "✦",
     klass: "chocolate class",
-    note: "gift #1: kitkat. budget — full love, zero money 😌",
+    note: "gift #1: kitkat. budget — full effort, zero money 😌",
     badge: "bg-slate-100 text-slate-700 border-slate-300",
   },
   {
@@ -47,6 +47,15 @@ const LOOT = [
     klass: "feelings class",
     note: "sorry, via cat. legally binding 😌",
     badge: "bg-gradient-to-r from-lilac to-purple-300 text-purple-900 border-purple-200",
+  },
+  {
+    src: "/media/memes/aachiya.jpg",
+    alt: "shin-chan with a pink bow and a fan, looking unimpressed",
+    rarity: "EPIC",
+    stars: "✦✦",
+    klass: "sass class",
+    note: "her reaction, pre-installed 😌",
+    badge: "bg-gradient-to-r from-rose-200 to-rose-300 text-rose-900 border-rose-300",
   },
   {
     src: "/media/memes/shinchan.jpg",
