@@ -31,6 +31,24 @@ const LOOT = [
     badge: "bg-slate-100 text-slate-700 border-slate-300",
   },
   {
+    src: "/media/memes/momos.jpg",
+    alt: "a kitten presenting a plate of momos with chutney",
+    rarity: "RARE",
+    stars: "✦✦",
+    klass: "chutney class",
+    note: "gift #2: momos. extra chutney, no extra charge 😌",
+    badge: "bg-sky-100 text-sky-800 border-sky-300",
+  },
+  {
+    src: "/media/memes/sorry.jpg",
+    alt: "a kitten holding a rose bouquet and a kitkat, apologising",
+    rarity: "EPIC",
+    stars: "✦✦",
+    klass: "feelings class",
+    note: "sorry, via cat. legally binding 😌",
+    badge: "bg-gradient-to-r from-lilac to-purple-300 text-purple-900 border-purple-200",
+  },
+  {
     src: "/media/memes/shinchan.jpg",
     alt: "shin-chan running with a bouquet of flowers",
     rarity: "LEGENDARY",
@@ -56,17 +74,16 @@ function Gift() {
 
   const collect = () => {
     setDrop((d) => {
-      if (d === 1) {
-        window.setTimeout(goldBurst, 350); // legendary sparkle when drop 2 lands
-        return 2;
+      if (d >= 1 && d <= LOOT.length) {
+        if (d + 1 === LOOT.length) window.setTimeout(goldBurst, 350); // legendary sparkle on the last drop
+        return d + 1;
       }
-      if (d === 2) return 3;
       return d;
     });
   };
 
-  const collected = Math.min(Math.max(drop - 1, 0), 2);
-  const done = drop >= 3;
+  const collected = Math.min(Math.max(drop - 1, 0), LOOT.length);
+  const done = drop >= LOOT.length + 1;
 
   return (
     <SceneShell>
@@ -113,7 +130,7 @@ function Gift() {
                 {/* the loot-master cat pops out of the box (kept exactly as before) */}
                 <motion.div
                   key="cat"
-                  className={`absolute left-1/2 z-30 -translate-x-1/2 ${drop >= 1 && drop <= 2 ? "-top-16" : "top-2"}`}
+                  className={`absolute left-1/2 z-30 -translate-x-1/2 ${drop >= 1 && drop <= LOOT.length ? "-top-16" : "top-2"}`}
                   initial={{ y: 70, opacity: 0, scale: 0.3 }}
                   animate={{ y: 0, opacity: 1, scale: 1 }}
                   transition={{ delay: 0.55, type: "spring", stiffness: 130, damping: 12 }}
@@ -128,8 +145,8 @@ function Gift() {
                   <motion.div
                     className="mt-1 -rotate-2 whitespace-nowrap rounded-xl bg-cream px-3 py-1 text-center font-hand text-lg text-rose-900 shadow-lg"
                     initial={{ opacity: 0, scale: 0.6 }}
-                    animate={{ opacity: drop >= 1 && drop <= 2 ? 0 : 1, scale: 1 }}
-                    transition={{ delay: drop >= 1 && drop <= 2 ? 0 : 1.1, type: "spring", stiffness: 200, damping: 15 }}
+                    animate={{ opacity: drop >= 1 && drop <= LOOT.length ? 0 : 1, scale: 1 }}
+                    transition={{ delay: drop >= 1 && drop <= LOOT.length ? 0 : 1.1, type: "spring", stiffness: 200, damping: 15 }}
                   >
                     meow! happy birthday!!
                   </motion.div>
@@ -151,7 +168,7 @@ function Gift() {
 
           {/* loot drops rise out of the box, one tap each — like game value */}
           <AnimatePresence mode="wait">
-            {open && drop >= 1 && drop <= 2 && (
+            {open && drop >= 1 && drop <= LOOT.length && (
               <motion.button
                 key={drop}
                 onClick={collect}
@@ -166,16 +183,13 @@ function Gift() {
                 <span
                   className={`absolute -top-3 left-1/2 z-10 -translate-x-1/2 whitespace-nowrap rounded-full border px-3 py-0.5 text-[10px] font-bold tracking-[0.18em] shadow ${LOOT[drop - 1].badge}`}
                 >
-                  {LOOT[drop - 1].rarity} {LOOT[drop - 1].stars}
+                  {LOOT[drop - 1].rarity} {LOOT[drop - 1].stars} · {LOOT[drop - 1].klass}
                 </span>
-                <span className="block overflow-hidden rounded-xl border-4 border-cream bg-cream shadow-[0_24px_60px_-18px_rgba(0,0,0,0.85)]">
-                  <img src={LOOT[drop - 1].src} alt={LOOT[drop - 1].alt} className="h-44 w-full object-cover" />
+                <span className="block overflow-hidden rounded-xl border-4 border-cream bg-cream p-1 shadow-[0_24px_60px_-18px_rgba(0,0,0,0.85)]">
+                  <img src={LOOT[drop - 1].src} alt={LOOT[drop - 1].alt} className="mx-auto max-h-52 w-auto max-w-full object-contain" />
                 </span>
                 <span className="mt-1.5 block -rotate-1 rounded-xl bg-cream px-3 py-1.5 text-center font-hand text-base leading-tight text-rose-900 shadow-lg">
                   {LOOT[drop - 1].note}
-                </span>
-                <span className="mt-1 block text-center text-[11px] tracking-wide text-rose-100/60">
-                  tap to collect ▸ {LOOT[drop - 1].klass}
                 </span>
               </motion.button>
             )}
@@ -190,7 +204,7 @@ function Gift() {
             transition={{ delay: 1.6 }}
             className="mt-7 flex items-center gap-3"
           >
-            <span className="font-hand text-base text-rose-100/70">loot bag: {collected}/2</span>
+            <span className="font-hand text-base text-rose-100/70">loot bag: {collected}/{LOOT.length}</span>
             {LOOT.map((l, i) => (
               <span
                 key={l.src}
