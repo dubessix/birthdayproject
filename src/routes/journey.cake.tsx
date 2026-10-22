@@ -165,7 +165,7 @@ function Cake() {
                 key="next"
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
-                onClick={() => nav({ to: "/journey/music" })}
+                onClick={() => nav({ to: "/journey/music" })} data-veilnav
                 className="rounded-full bg-rose-500 px-6 py-2.5 text-sm font-medium text-white shadow-lg shadow-rose-900/40"
               >
                 {page.nextLabel}

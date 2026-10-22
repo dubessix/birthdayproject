@@ -63,7 +63,7 @@ function Letter() {
 
         <div className="mt-6 flex justify-center">
           <button
-            onClick={() => nav({ to: "/journey/memories" })}
+            onClick={() => nav({ to: "/journey/memories" })} data-veilnav
             className="min-h-11 rounded-full bg-rose-500/90 px-7 py-3 text-sm text-white shadow-lg backdrop-blur transition hover:scale-[1.03]"
           >
             {content.letter.nextLabel}

@@ -91,7 +91,8 @@ function Credits() {
               try { sessionStorage.removeItem("hena:unlocked"); } catch { /* storage may be unavailable */ }
               nav({ to: "/" });
             }}
-            onPointerDown={tapFill("rgba(255,255,255,0.5)")}
+            onPointerDown={tapFill("rgba(248,183,192,0.85)")}
+            data-veilnav
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.97 }}
             className="relative isolate mt-6 min-h-11 overflow-hidden rounded-full bg-gradient-to-r from-amber-200 via-rose-200 to-amber-200 px-7 py-2.5 text-sm text-rose-950 shadow-[0_0_40px_rgba(232,192,122,0.6)]"

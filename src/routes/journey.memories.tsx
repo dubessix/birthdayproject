@@ -112,7 +112,7 @@ function Memories() {
 
         <div className="mt-10 flex justify-center">
           <button
-            onClick={() => nav({ to: "/journey/cake" })}
+            onClick={() => nav({ to: "/journey/cake" })} data-veilnav
             className="min-h-11 rounded-full bg-rose-500/90 px-7 py-3 text-sm text-white shadow-lg transition hover:scale-[1.03]"
           >
             {content.memories.nextLabel}

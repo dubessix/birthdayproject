@@ -94,8 +94,8 @@ function MusicScene() {
         </div>
 
         <button
-          onClick={() => nav({ to: "/journey/wishes" })}
-          onPointerDown={tapFill("rgba(255,255,255,0.45)")}
+          onClick={() => nav({ to: "/journey/wishes" })} data-veilnav
+          onPointerDown={tapFill("rgba(248,183,192,0.85)")}
           className="relative isolate mt-7 min-h-11 overflow-hidden rounded-full bg-white/60 px-7 py-3 text-sm text-rose-900 backdrop-blur transition hover:scale-[1.02] dark:bg-white/10 dark:text-rose-100"
         >
           {content.musicPage.nextLabel}

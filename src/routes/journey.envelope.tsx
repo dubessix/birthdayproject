@@ -129,7 +129,7 @@ function EnvelopeScene() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.15 }}
-              onClick={() => nav({ to: "/journey/letter" })}
+              onClick={() => nav({ to: "/journey/letter" })} data-veilnav
               className="min-h-11 rounded-full bg-rose-500/90 px-7 py-3 text-sm text-white shadow-lg backdrop-blur transition hover:scale-[1.03]"
             >
               Read the letter →

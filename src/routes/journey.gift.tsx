@@ -111,7 +111,7 @@ function Gift() {
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6 }}
-            onClick={() => nav({ to: "/journey/final" })}
+            onClick={() => nav({ to: "/journey/final" })} data-veilnav
             className="mt-10 rounded-full bg-rose-500 px-6 py-2.5 text-sm font-medium text-white shadow-lg shadow-rose-900/40"
           >
             {page.nextLabel}

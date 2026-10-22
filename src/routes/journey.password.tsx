@@ -138,7 +138,7 @@ function Password() {
               </p>
               {/* friendly escape hatch — the gate is theatre, she should never get stuck */}
               <button
-                onClick={() => { unlock(); nav({ to: "/journey/loading" }); }}
+                onClick={() => { unlock(); nav({ to: "/journey/loading" }); }} data-veilnav
                 onPointerDown={tapFill("rgba(255,255,255,0.35)")}
                 className="relative isolate mt-2 min-h-8 overflow-hidden rounded-full px-4 py-1.5 text-[11px] underline-offset-4 hover:underline"
               >

@@ -100,7 +100,7 @@ function Night() {
         ))}
 
         <button
-          onClick={() => nav({ to: "/journey/gift" })}
+          onClick={() => nav({ to: "/journey/gift" })} data-veilnav
           className="mt-14 min-h-11 rounded-full bg-rose-500 px-6 py-2.5 text-sm font-medium text-white shadow-lg shadow-rose-900/40 transition hover:scale-[1.03]"
         >
           {page.nextLabel}

@@ -105,7 +105,7 @@ function Final() {
           initial={{ opacity: 0 }}
           animate={{ opacity: phase === "text" ? 1 : 0 }}
           transition={{ delay: 2, duration: 1 }}
-          onClick={() => nav({ to: "/journey/credits" })}
+          onClick={() => nav({ to: "/journey/credits" })} data-veilnav
           className="mt-9 min-h-11 rounded-full bg-rose-500/90 px-8 py-3 text-sm text-white shadow-lg shadow-rose-900/50 transition hover:scale-[1.03]"
         >
           Continue →

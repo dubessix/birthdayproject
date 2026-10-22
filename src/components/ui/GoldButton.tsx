@@ -14,7 +14,7 @@ export const GoldButton = forwardRef<HTMLButtonElement, ButtonHTMLAttributes<HTM
         className,
       )}
       onPointerDown={(e) => {
-        tapFill("rgba(255,255,255,0.55)")(e);
+        tapFill("rgba(248,183,192,0.85)")(e);
         onPointerDown?.(e);
       }}
       {...rest}

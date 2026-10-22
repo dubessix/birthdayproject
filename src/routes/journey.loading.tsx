@@ -1,6 +1,7 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
+import { AnimatePresence } from "framer-motion";
 import { HiOutlinePlay } from "react-icons/hi2";
 import { SceneShell } from "@/components/layout/SceneShell";
 import { GlassCard } from "@/components/ui/GlassCard";
@@ -18,31 +19,80 @@ function Loading() {
   const nav = useNavigate();
   const { playMusic, musicOn, musicFailed } = useJourney();
   const [progress, setProgress] = useState(0);
+  const [preload, setPreload] = useState(0);
+  const [slow, setSlow] = useState(false);
 
   useEffect(() => {
     const id = setInterval(() => setProgress((p) => Math.min(100, p + 2)), 90);
     // safety net: the Continue button can never stay locked (throttled tabs, etc.)
-    const safety = setTimeout(() => setProgress(100), 8000);
+    const safety = setTimeout(() => { setProgress(100); setSlow(true); }, 8000);
     return () => { clearInterval(id); clearTimeout(safety); };
   }, []);
+
+  // real asset preload drives the last stretch of the bar — no stalls, no cuts
+  useEffect(() => {
+    const assets = [
+      ...content.photos.map((ph) => ph.src),
+      "/media/memes/birthday-sign.jpg",
+      "/media/memes/not-that-special.jpg",
+      "/media/img/envelope-closed.webp",
+      "/media/img/envelope-open.webp",
+      "/media/audio/chosen-ring.mp3",
+      "/media/audio/soft-piano.mp3",
+      "/media/audio/music-box.mp3",
+      "/media/audio/birthday-tune.mp3",
+      "/media/author/debjeet.png",
+      "/media/stickers/wait-bunny.webp",
+      "/media/stickers/panda-heart.webp",
+    ];
+    let done = 0;
+    assets.forEach((src) => {
+      fetch(src, { cache: "force-cache" })
+        .catch(() => {})
+        .finally(() => {
+          done += 1;
+          setPreload(Math.round((done / assets.length) * 100));
+        });
+    });
+  }, []);
+
+  const shown = preload >= 100 || slow ? progress : Math.min(progress, 92);
 
   return (
     <SceneShell>
       <GlassCard className="w-full max-w-md text-center">
+        <motion.img
+          src="/media/stickers/panda-heart.webp"
+          alt="A little panda holding a pink heart balloon"
+          initial={{ opacity: 0, y: -14, scale: 0.9 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          className="mx-auto mb-4 w-24 -rotate-2 rounded-2xl border-4 border-white/90 shadow-xl"
+        />
         <TypeWriter text={content.recipient.greeting} className="font-display text-3xl sm:text-4xl" />
         <p className="mt-3 text-sm text-muted-foreground">Preparing something for you…</p>
 
-        <div className="relative mt-8 h-2 overflow-hidden rounded-full bg-rose-100/60 dark:bg-white/10">
-          <motion.div className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-rose-300 via-amber-200 to-lilac"
-            style={{ width: `${progress}%` }} />
+        <div className="relative mt-7 h-5 w-full overflow-hidden rounded-full border-2 border-rose-900/50 bg-white/90 dark:border-rose-100/40 dark:bg-white/10">
+          <div
+            className="h-full rounded-full transition-[width] duration-300 ease-out"
+            style={{ width: `${shown}%`, background: "repeating-linear-gradient(45deg, #f87f9f 0 10px, #fba7bc 10px 20px)" }}
+          />
         </div>
-
-        <div className="relative mt-4 h-10 overflow-hidden">
-          {["💗", "✨", "🌸", "💫", "🌷", "💖"].map((e, i) => (
-            <motion.span key={i} className="absolute text-lg" style={{ left: `${8 + (i * 15) % 80}%` }}
-              animate={{ y: [10, -30], opacity: [0, 1, 0] }}
-              transition={{ duration: 3, repeat: Infinity, delay: i * 0.4 }}>{e}</motion.span>
-          ))}
+        <p className="mt-2 text-[11px] tracking-[0.25em] text-rose-200/70">{shown < 100 ? "LOADING…" : "ALL READY ✨"}</p>
+        <div className="mt-3 min-h-[112px]">
+          <AnimatePresence>
+            {shown < 100 && (
+              <motion.img
+                key="bunny"
+                src="/media/stickers/wait-bunny.webp"
+                alt="A cartoon bunny asking you to wait a moment while things load"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.92 }}
+                className="mx-auto w-28 rotate-2 rounded-2xl border-4 border-white/90 shadow-xl"
+              />
+            )}
+          </AnimatePresence>
         </div>
 
         <div className="mt-8 flex flex-col items-center gap-3">
@@ -59,8 +109,9 @@ function Loading() {
             </>
           )}
           <button
+            data-veilnav
             onClick={() => nav({ to: "/journey/envelope" })}
-            disabled={progress < 100}
+            disabled={shown < 100}
             className="min-h-11 rounded-full px-6 py-3 text-sm text-rose-700 underline-offset-4 hover:underline disabled:opacity-40 dark:text-rose-200"
           >
             Continue →
