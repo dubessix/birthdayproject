@@ -58,8 +58,8 @@ const LOOT = [
     badge: "bg-gradient-to-r from-rose-200 to-rose-300 text-rose-900 border-rose-300",
   },
   {
-    src: "/media/memes/shinchan.jpg",
-    alt: "shin-chan running with a bouquet of flowers",
+    src: "/media/memes/shinchan-strawberry.jpg",
+    alt: "shin-chan holding a strawberry bouquet",
     rarity: "LEGENDARY",
     stars: "✦✦✦",
     klass: "flowers class",
